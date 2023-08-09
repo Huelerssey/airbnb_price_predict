@@ -82,13 +82,10 @@ Se observar no arquivo csv o que tornava os numeros um objeto era o sifrão e a 
 a casa decimal, e com estes comandos concertamos esse problema
 """
 
-base_airbnb['price'] = base_airbnb['price'].str.replace('$', '', regex=True)
-base_airbnb['price'] = base_airbnb['price'].str.replace(',', '', regex=True)
-base_airbnb['price'] = base_airbnb['price'].astype(np.float32, copy=False)
+base_airbnb['price'] = base_airbnb['price'].apply(lambda x: float(x.replace('$', '').replace(',', '')))
 
-base_airbnb['extra_people'] = base_airbnb['extra_people'].str.replace('$', '', regex=True)
-base_airbnb['extra_people'] = base_airbnb['extra_people'].str.replace(',', '', regex=True)
-base_airbnb['extra_people'] = base_airbnb['extra_people'].astype(np.float32, copy=False)
+
+base_airbnb['extra_people'] = base_airbnb['extra_people'].apply(lambda x: float(x.replace('$', '').replace(',', '')))
 
 #print(base_airbnb.corr()) mostra a correlação entre os dados
 
@@ -437,6 +434,7 @@ Nesse caso o melhor modelo é o ExtraTrees por que possui o maior r² e o menor 
 
 #separar os dados em treino e teste + Treino do modelo
 base_airbnb_cod = base_airbnb_cod.drop('is_business_travel_ready', axis=1)
+print(base_airbnb_cod.columns)
 
 y = base_airbnb_cod['price']
 x = base_airbnb_cod.drop('price', axis=1)
@@ -468,4 +466,4 @@ causam pouco ou nenhum impacto numérico, dando a possibildiade de excluir elas
 para tornar o modelo cada vez mais simples
 """
 
-joblib.dump(modelo_et, 'modelo.joblib')
+joblib.dump(modelo_et, 'modelo_treinado.pkl')
