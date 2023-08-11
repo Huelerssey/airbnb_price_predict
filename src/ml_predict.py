@@ -104,12 +104,15 @@ colunas_para_converter = ['host_is_superhost', 'instant_bookable']
 # aplica a fução de conversão
 base_airbnb = converter_colunas_bool(base_airbnb, colunas_para_converter)
 
-# excluir colunas que não fazem mais sentido após a análise exploratória
-base_airbnb = base_airbnb.drop('instant_bookable', axis=1)
-base_airbnb = base_airbnb.drop('guests_included', axis=1)
-base_airbnb = base_airbnb.drop('maximum_nights', axis=1)
-base_airbnb = base_airbnb.drop('number_of_reviews', axis=1)
-base_airbnb = base_airbnb.drop('is_business_travel_ready', axis=1)
+# lista de colunas que não fazem mais sentido após a análise exploratória
+colunas_excluir = [
+    'instant_bookable', 'guests_included', 'maximum_nights',
+    'number_of_reviews', 'is_business_travel_ready', 'host_listings_count',
+    'minimum_nights', 'bed_type', 'cancellation_policy'
+]
+
+# excluir colunas selecionadas
+base_airbnb = base_airbnb.drop(columns=colunas_excluir)
 
 ## 4 - LIMPEZA E TRATAMENTO DE DADOS - ##
 
@@ -181,8 +184,7 @@ print(f'{linhas_removidas} linhas removidas da coluna extra_people')
 #host_listings_count
 # diagrama_caixa(base_airbnb['host_listings_count'])
 # grafico_barra(base_airbnb['host_listings_count'])
-base_airbnb, linhas_removidas = excluir_outliers(base_airbnb, 'host_listings_count')
-print(f'{linhas_removidas} linhas removidas da coluna host_listings_count')
+# movido para etapa de limpeza (foi excluido)
 
 #accommodates
 # diagrama_caixa(base_airbnb['accommodates'])
@@ -222,8 +224,7 @@ print(f'{linhas_removidas} linhas removidas da coluna beds')
 #minimum_nights
 # diagrama_caixa(base_airbnb['minimum_nights'])
 # grafico_barra(base_airbnb['minimum_nights'])
-base_airbnb, linhas_removidas = excluir_outliers(base_airbnb, 'minimum_nights')
-print(f'{linhas_removidas} linhas removidas da coluna minimum_nights')
+# movido para etapa de limpeza (foi excluido)
 
 #maximum_nights
 # diagrama_caixa(base_airbnb['maximum_nights'])
@@ -265,31 +266,11 @@ for tipo in colunas_agrupar:
 
 #bed_type
 # grafico_aux_txt(base_airbnb, 'bed_type')
-tabela_tipos_cama = base_airbnb['bed_type'].value_counts()
-
-# Agrupa todos as categorias com valor menor que 9000 em uma lista
-colunas_agrupar_camas = []
-for tipo in tabela_tipos_cama.index:
-    if tabela_tipos_cama[tipo] < 9000:
-        colunas_agrupar_camas.append(tipo)
-
-# inserir todos os valores da lista colunas_agrupar_camas na categoria outros da coluna bed_type
-for tipo in colunas_agrupar_camas:
-    base_airbnb.loc[base_airbnb['bed_type']==tipo, 'bed_type'] = 'Other'
+# movido para etapa de limpeza (foi excluido)
 
 #cancellation_policy
 # grafico_aux_txt(base_airbnb, 'cancellation_policy')
-
-# Agrupa todos as categorias com valor menor que 10000 em uma lista
-tabela_tipos_politica = base_airbnb['cancellation_policy'].value_counts()
-colunas_agrupar_politica = []
-for tipo in tabela_tipos_politica.index:
-    if tabela_tipos_politica[tipo] < 10000:
-        colunas_agrupar_politica.append(tipo)
-
-# inserir todos os valores da lista tabela_tipos_politica na categoria strict da coluna cancellation_policy
-for tipo in colunas_agrupar_politica:
-    base_airbnb.loc[base_airbnb['cancellation_policy']==tipo, 'cancellation_policy'] = 'strict'
+# movido para etapa de limpeza (foi excluido)
 
 #amenities
 # criar uma nova coluna composta apenas pela quantidade de amenities
@@ -303,17 +284,17 @@ base_airbnb = base_airbnb.drop('amenities', axis=1)
 base_airbnb, linhas_removidas = excluir_outliers(base_airbnb, 'n_amenities')
 print(f'{linhas_removidas} linhas removidas da coluna n_amenities')
 
+# salva o dataset modelado
+base_airbnb.to_pickle("arquivos_pkl/dataset_airbnb_modelado.pkl")
+
 ## PARA COLUNAS CATEGÓRICAS ##
 
 # transforma colunas categóricas em numéricas
-colunas_categoria = ['property_type', 'room_type', 'cancellation_policy', 'bed_type']
+colunas_categoria = ['property_type', 'room_type']
 base_airbnb = pd.get_dummies(data=base_airbnb, columns=colunas_categoria)
 
-# salva o dataset modelado
-#base_airbnb.to_pickle("arquivos_pkl/dataset_airbnb_modelado.pkl")
-
-# Amostra aleatória de 10.000 linhas
-base_airbnb_sample = base_airbnb.sample(n=350000, random_state=42)
+# Amostra aleatória de 300.000 linhas
+# base_airbnb_sample = base_airbnb.sample(n=300000, random_state=42)
 
 # correlação das colunas com o preço
 # print(base_airbnb.corr()['price'])
@@ -468,13 +449,19 @@ x = base_airbnb.drop('price', axis=1)
 x_treino, x_teste, y_treino, y_teste = train_test_split(x, y, test_size=0.2 ,random_state=42)
 
 # cria o modelo
-modelo_extratrees = ExtraTreesRegressor(n_estimators=100, random_state=42)
+modelo_extratrees = ExtraTreesRegressor(n_estimators=10, random_state=42)
 
 # treina o modelo
 modelo_extratrees.fit(x_treino, y_treino)
 
 # testa o modelo
 y_pred = modelo_extratrees.predict(x_teste)
+
+#avalia o modelo
+mse = mean_squared_error(y_teste, y_pred)
+r2 = r2_score(y_teste, y_pred)
+print(f'Erro Quadrático Médio: {mse}')
+print(f'Coeficiente de Determinação (R2): {r2}')
 
 #armazena o modelo treinado para produção
 joblib.dump(modelo_extratrees, "arquivos_pkl/modelo_airbnb_treinado.pkl")
