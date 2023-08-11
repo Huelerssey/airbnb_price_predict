@@ -468,7 +468,7 @@ x = base_airbnb.drop('price', axis=1)
 x_treino, x_teste, y_treino, y_teste = train_test_split(x, y, test_size=0.2 ,random_state=42)
 
 # cria o modelo
-modelo_extratrees = RandomForestRegressor(n_estimators=100, random_state=42)
+modelo_extratrees = ExtraTreesRegressor(n_estimators=100, random_state=42)
 
 # treina o modelo
 modelo_extratrees.fit(x_treino, y_treino)
