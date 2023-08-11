@@ -12,5 +12,5 @@ def carregar_dados_abnb():
 # função que otimiza o carregamento dos dados do modelo
 @st.cache_data
 def carregar_modelo_abnb():
-    modelo_abnb = load("arquivos_pkl/dataset_airbnb_modelado.pkl")
+    modelo_abnb = load("arquivos_pkl/modelo_airbnb_treinado.pkl")
     return modelo_abnb

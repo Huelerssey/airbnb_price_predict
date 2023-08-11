@@ -2,16 +2,19 @@ import streamlit as st
 import json
 from streamlit_lottie import st_lottie
 from streamlit_option_menu import option_menu
-import pages.separador.pagina_1 as PaginaUm
-import pages.separador.pagina_2 as PaginaDois
-import pages.separador.pagina_3 as PaginaTres
+from streamlit_extras.colored_header import colored_header
+import pages.separador.home as PaginaUm
+import pages.separador.previsao as PaginaDois
+import pages.separador.map as PaginaTres
+import pages.separador.dashboard as PaginaQuatro
+import pages.separador.storytelling as paginaCinco
 
 
 # configurações da pagina
 st.set_page_config(
-    page_title='MultiPagesAPP',
+    page_title='Airbnb Predict',
     #https://streamlit-emoji-shortcodes-streamlit-app-gwckff.streamlit.app
-    page_icon='✅',
+    page_icon='💸',
     layout='wide'
 )
 
@@ -25,25 +28,28 @@ with open("animacoes/animacao_lottie.json") as source:
 
 # Menu de navegação lateral
 with st.sidebar:
+
     #exibir animação
     st_lottie(animacao_1, height=100, width=270)
-    st.write("---")
+
+    # marcador azul
+    colored_header(
+    label="",
+    description="",
+    color_name="light-blue-70"
+    )
+
     #https://github.com/victoryhb/streamlit-option-menu
     opcao_selecionada = option_menu(
         #https://icons.getbootstrap.com
         menu_title="Menu Inicial",
         menu_icon="justify",
-        options=["Página 1", "Página 2", "Página 3", "---"],
-        icons=['bookmark', 'bookmark', 'bookmark'],
+        options=["Home", "Previsão", "Mapa", "Dashboard", "Storytelling"],
+        icons=['house', 'clipboard-data', 'geo-alt', "journal-code", "pin-angle" ],
         default_index=0,
         orientation='vertical',
-        # styles={
-        #     "container": {"padding": "0!important", "background-color": "#1a202c"},  # azul escuro
-        #     "icon": {"color": "#a0aec0", "font-size": "25px"},  # azul claro
-        #     "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px", "color": "#a0aec0", "--hover-color": "#a0aec0"},  # azul claro
-        #     "nav-link-selected": {"background-color": "#2d3748", "color": "white"},  # azul mais escuro e branco
-        # }
     )
+
     st.write("")
     st.write("")
     st.write("")
@@ -63,7 +69,12 @@ with st.sidebar:
     st.write("")
 
     # footer da barra lateral
-    st.write("---")
+    colored_header(
+    label="",
+    description="",
+    color_name="light-blue-70"
+    )
+
     st.markdown("<h5 style='text-align: center; color: lightgray;'>Developed By: Huelerssey Rodrigues</h5>", unsafe_allow_html=True)
     st.markdown("""
     <div style="display: flex; justify-content: space-between;">
@@ -86,13 +97,21 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 # Retorna a pagina 1
-if opcao_selecionada == "Página 1":
-    PaginaUm.pagina1()
+if opcao_selecionada == "Home":
+    PaginaUm.home()
 
 # Retorna a pagina 2
-elif opcao_selecionada == "Página 2":
-    PaginaDois.pagina2()
+elif opcao_selecionada == "Previsão":
+    PaginaDois.previsao()
 
 # Retorna a pagina 3
-elif opcao_selecionada == "Página 3":
-    PaginaTres.pagina3()
+elif opcao_selecionada == "Mapa":
+    PaginaTres.map()
+
+# retorna a pagina 4
+elif opcao_selecionada == "Dashboard":
+    PaginaQuatro.dashboard()
+
+#retorna a pagina 5
+elif opcao_selecionada == "Storytelling":
+    paginaCinco.storytelling()
