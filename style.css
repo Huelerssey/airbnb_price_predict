@@ -11,3 +11,10 @@ header {
     visibility: hidden;
 }
 
+.block-container {
+    height: 100%;
+}
+
+.folium-map {
+    height: 100%;
+}
