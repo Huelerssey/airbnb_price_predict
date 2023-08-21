@@ -10,6 +10,9 @@ def storytelling():
     dados = carregar_dados_abnb()
     st.markdown("<h1 style='text-align: center;'>📌 Construção do Projeto 📌</h1>", unsafe_allow_html=True)
 
+    # cria 3 colunas
+    coluna1, coluna2, coluna3 = st.columns(3)
+
     # marcador vermelho
     colored_header(
     label="",
@@ -170,7 +173,138 @@ def storytelling():
     """
     st.code(codigo2, language='python')
     st.write("Com as funções auxiliares construidas, é hora de colocar a mão na massa!")
-    st.write("")
+    codigo3 = """
+    ## COLUNAS NUMÉRICAS ##
+
+    #price
+    diagrama_caixa(base_airbnb['price'])
+    histograma(base_airbnb['price'])
+    base_airbnb, linhas_removidas = excluir_outliers(base_airbnb, 'price')
+    print(f'{linhas_removidas} linhas removidas da coluna price')
+
+    #extra_people
+    diagrama_caixa(base_airbnb['extra_people'])
+    histograma(base_airbnb['extra_people'])
+    base_airbnb, linhas_removidas = excluir_outliers(base_airbnb, 'extra_people')
+    print(f'{linhas_removidas} linhas removidas da coluna extra_people')
+
+    #host_listings_count
+    diagrama_caixa(base_airbnb['host_listings_count'])
+    grafico_barra(base_airbnb['host_listings_count'])
+    # movido para etapa de limpeza (foi excluido)
+
+    #accommodates
+    diagrama_caixa(base_airbnb['accommodates'])
+    grafico_barra(base_airbnb['accommodates'])
+    base_airbnb, linhas_removidas = excluir_outliers(base_airbnb, 'accommodates')
+    print(f'{linhas_removidas} linhas removidas da coluna accommodates')
+
+    #bathrooms
+    diagrama_caixa(base_airbnb['bathrooms'])
+    grafico_barra(base_airbnb['bathrooms'])
+    base_airbnb, linhas_removidas = excluir_outliers(base_airbnb, 'bathrooms')
+    print(f'{linhas_removidas} linhas removidas da coluna bathrooms')
+
+    #bedrooms
+    diagrama_caixa(base_airbnb['bedrooms'])
+    grafico_barra(base_airbnb['bedrooms'])
+    base_airbnb, linhas_removidas = excluir_outliers(base_airbnb, 'bedrooms')
+    print(f'{linhas_removidas} linhas removidas da coluna bedrooms')
+
+    #beds
+    diagrama_caixa(base_airbnb['beds'])
+    grafico_barra(base_airbnb['beds'])
+    base_airbnb, linhas_removidas = excluir_outliers(base_airbnb, 'beds')
+    print(f'{linhas_removidas} linhas removidas da coluna beds')
+
+    #guests_included
+    diagrama_caixa(base_airbnb['guests_included'])
+    grafico_barra(base_airbnb['guests_included'])
+    # print(limites(base_airbnb['guests_included']))
+    plt.figure(figsize=(15, 5))
+    sns.barplot(x=base_airbnb['guests_included'].value_counts().index, y=base_airbnb['guests_included'].value_counts())
+    plt.show()
+    # movido para etapa de limpeza (foi excluido)
+
+    #minimum_nights
+    diagrama_caixa(base_airbnb['minimum_nights'])
+    grafico_barra(base_airbnb['minimum_nights'])
+    # movido para etapa de limpeza (foi excluido)
+
+    #maximum_nights
+    diagrama_caixa(base_airbnb['maximum_nights'])
+    grafico_barra(base_airbnb['maximum_nights'])
+    # movido para etapa de limpeza (foi excluido)
+
+    #number_of_reviews
+    diagrama_caixa(base_airbnb['number_of_reviews'])
+    grafico_barra(base_airbnb['number_of_reviews'])
+    # movido para etapa de limpeza (foi excluido)
+
+    ## COLUNAS DE TEXTO ##
+
+    # print(base_airbnb.dtypes)
+    # print('-'*60)
+    # print(base_airbnb.iloc[0])
+
+    #property_type
+    #print(base_airbnb['property_type'].value_counts()) conta quantos valores existem para cada tipo de texto
+    grafico_aux_txt(base_airbnb, 'property_type')
+
+    tabela_tipos_casa = base_airbnb['property_type'].value_counts() #descreve a categoria e seu valor
+    #print(tabela_tipos_casa.index) descreve apenas as caregorias
+    #print(tabela_tipos_casa['Apartament']) descreve os valores da categoria passada
+
+    # Agrupa todos as categorias com valor menor que 2000 em uma lista
+    colunas_agrupar = []
+    for tipo in tabela_tipos_casa.index:
+        if tabela_tipos_casa[tipo] < 2000:
+            colunas_agrupar.append(tipo)
+
+    # inserir todos os valores da lista colunas_agrupar na categoria outros da coluna property_type
+    for tipo in colunas_agrupar:
+        base_airbnb.loc[base_airbnb['property_type']==tipo, 'property_type'] = 'Other'
+
+    #room_type
+    grafico_aux_txt(base_airbnb, 'room_type')
+
+    #bed_type
+    grafico_aux_txt(base_airbnb, 'bed_type')
+    # movido para etapa de limpeza (foi excluido)
+
+    #cancellation_policy
+    grafico_aux_txt(base_airbnb, 'cancellation_policy')
+    # movido para etapa de limpeza (foi excluido)
+
+    #amenities
+    # criar uma nova coluna composta apenas pela quantidade de amenities
+    base_airbnb['n_amenities'] = base_airbnb['amenities'].str.split(',').apply(len)
+
+    # deletar a coluna antiga que foi substituida
+    base_airbnb = base_airbnb.drop('amenities', axis=1)
+
+    diagrama_caixa(base_airbnb['n_amenities'])
+    grafico_barra(base_airbnb['n_amenities'])
+    base_airbnb, linhas_removidas = excluir_outliers(base_airbnb, 'n_amenities')
+    print(f'{linhas_removidas} linhas removidas da coluna n_amenities')
+
+    ## PARA COLUNAS CATEGÓRICAS ##
+
+    # transforma colunas categóricas em numéricas
+    colunas_categoria = ['property_type', 'room_type']
+    base_airbnb = pd.get_dummies(data=base_airbnb, columns=colunas_categoria)
+    """
+    st.code(codigo3, language='python')
+    st.subheader("Coluna de Preço")
+    
+    with st.container():
+
+        #cria duas colunas
+        colu1, colu2 = st.columns(2)
+        
+        colu1.image("imagens/price.png")
+
+        colu2.image("imagens/price_hist.png")
 
     st.header("📌 Modelando a Inteligência Artificial")
     st.write("")
