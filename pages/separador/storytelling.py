@@ -10,9 +10,6 @@ def storytelling():
     dados = carregar_dados_abnb()
     st.markdown("<h1 style='text-align: center;'>📌 Construção do Projeto 📌</h1>", unsafe_allow_html=True)
 
-    # cria 3 colunas
-    coluna1, coluna2, coluna3 = st.columns(3)
-
     # marcador vermelho
     colored_header(
     label="",
@@ -295,16 +292,41 @@ def storytelling():
     base_airbnb = pd.get_dummies(data=base_airbnb, columns=colunas_categoria)
     """
     st.code(codigo3, language='python')
-    st.subheader("Coluna de Preço")
     
-    with st.container():
+    # price
+    st.markdown("<h4 style='text-align: center;'>Coluna de Preço</h4>", unsafe_allow_html=True)
+    st.image("imagens/preco_1.png")
+    st.image("imagens/preco_2.png")
+    
+    # extra_people
+    st.markdown("<h4 style='text-align: center;'>Coluna de Preço por Pessoa Extra</h4>", unsafe_allow_html=True)
+    st.image("imagens/extra_people_1.png")
+    st.image("imagens/extra_people_2.png")
 
-        #cria duas colunas
-        colu1, colu2 = st.columns(2)
-        
-        colu1.image("imagens/price.png")
+    # host_listings_count
+    st.markdown("<h4 style='text-align: center;'>Número de Hóspedes</h4>", unsafe_allow_html=True)
+    st.image("imagens/host_listing_1.png")
+    st.image("imagens/host_listing_2.png")
 
-        colu2.image("imagens/price_hist.png")
+    # accommodates
+    st.markdown("<h4 style='text-align: center;'>Número de Comodidades</h4>", unsafe_allow_html=True)
+    st.image("imagens/accommodates_1.png")
+    st.image("imagens/accommodates_2.png")
+
+    # bathrooms
+    st.markdown("<h4 style='text-align: center;'>Número de Banheiros</h4>", unsafe_allow_html=True)
+    st.image("imagens/bathrooms_1.png")
+    st.image("imagens/bathrooms_2.png")
+
+    # bedrooms
+    st.markdown("<h4 style='text-align: center;'>Número de Quartos</h4>", unsafe_allow_html=True)
+    st.image("imagens/bedrooms_1.png")
+    st.image("imagens/bedrooms_2.png")
+
+    # beds
+    st.markdown("<h4 style='text-align: center;'>Número de Camas</h4>", unsafe_allow_html=True)
+    st.image("imagens/beds_1.png")
+    st.image("imagens/beds_2.png")
 
     st.header("📌 Modelando a Inteligência Artificial")
     st.write("")
