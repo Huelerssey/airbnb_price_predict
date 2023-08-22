@@ -63,6 +63,7 @@ def storytelling():
     **mes**: Mês da listagem.\n
     """
     st.write(texto)
+    st.write("")
 
     st.header("📌 Limpeza e Tratamento dos Dados")
     st.write("Nesta etapa, vamos nos concentrar em limpar e preparar os dados para análise, isso incluirá a seleção das colunas relevantes, a transformação de tipos de dados e a remoção de linhas ou colunas indesejadas.")
@@ -293,46 +294,196 @@ def storytelling():
     """
     st.code(codigo3, language='python')
     
+    st.write("---")
     # price
     st.markdown("<h4 style='text-align: center;'>Coluna de Preço</h4>", unsafe_allow_html=True)
     st.image("imagens/preco_1.png")
     st.image("imagens/preco_2.png")
+    st.write("O gráfico mostra a mediana dos preços em torno de 200, com a maioria dos preços concentrados entre aproximadamente 50 e 400 R$. Existem muitos outliers acima do limite superior (bigode superior), indicando listagens com preços muito mais altos do que a média. Por esse motivo, usamos a função auxiliar para exclui-los.")
     
+    st.write("---")
     # extra_people
     st.markdown("<h4 style='text-align: center;'>Coluna de Preço por Pessoa Extra</h4>", unsafe_allow_html=True)
     st.image("imagens/extra_people_1.png")
     st.image("imagens/extra_people_2.png")
+    st.write("A mediana dos custos adicionais por pessoa extra é $0, o que indica que muitos anfitriões não cobram um custo adicional por hóspedes extras. A maioria dos custos para pessoas extras está concentrada entre $0 e $50 e existem alguns outliers acima do limite superior, indicando algumas listagens que cobram significativamente mais por hóspedes extras. Dado o grande número de listagens que não cobram por pessoas extras e a presença de valores mais altos, vamos permanecer com a coluna mas excluindo os outliers.")
 
+    st.write("---")
     # host_listings_count
-    st.markdown("<h4 style='text-align: center;'>Número de Hóspedes</h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: center;'>Quantidade de Porpriedades de um Anfitrião</h4>", unsafe_allow_html=True)
     st.image("imagens/host_listing_1.png")
     st.image("imagens/host_listing_2.png")
+    st.write("A mediana da quantidade de listagens por anfitrião é 1, indicando que muitos anfitriões têm apenas uma listagem no Airbnb, o que torna sem sentido continuar com esta coluna em nossa análise, assim decidimos exclui-la")
 
+    st.write("---")
     # accommodates
     st.markdown("<h4 style='text-align: center;'>Número de Comodidades</h4>", unsafe_allow_html=True)
     st.image("imagens/accommodates_1.png")
     st.image("imagens/accommodates_2.png")
+    st.write("A mediana do número de acomodações (número de pessoas que uma listagem pode acomodar) é 2, indicando que muitos espaços são projetados para acomodar duas pessoas. Existem alguns outliers acima do limite superior, indicando algumas listagens que podem acomodar um número significativamente maior de pessoas. Dado que a capacidade de acomodação é uma característica importante ao decidir um espaço para alugar, vamos manter essa coluna mas excluir os outliers.")
 
+    st.write("---")
     # bathrooms
     st.markdown("<h4 style='text-align: center;'>Número de Banheiros</h4>", unsafe_allow_html=True)
     st.image("imagens/bathrooms_1.png")
     st.image("imagens/bathrooms_2.png")
+    st.write("A mediana do número de banheiros é 1, o que indica que muitas listagens possuem apenas um banheiro, com a maioria das listagens possui entre 1 e 2 banheiros. Existe alguns outliers acima do limite superior, mostrando algumas propriedades com um número significativamente maior de banheiros. Como o número de banheiros em uma propriedade é geralmente uma característica importante para os hóspedes, pois pode afetar o conforto e a conveniência, especialmente para grupos maiores. Portanto, vamos excluir os outliers e manter a coluna.")
 
+    st.write("---")
     # bedrooms
     st.markdown("<h4 style='text-align: center;'>Número de Quartos</h4>", unsafe_allow_html=True)
     st.image("imagens/bedrooms_1.png")
     st.image("imagens/bedrooms_2.png")
+    st.write("A mediana do número de quartos é 1, o que sugere que muitas listagens são de unidades de um quarto e existem alguns outliers acima do limite superior, indicando algumas propriedades com um número significativamente maior de quartos. O número de quartos, como o número de banheiros, é uma característica crucial para muitos hóspedes ao decidir sobre um espaço de aluguel. Quartos adicionais podem oferecer mais privacidade e conforto para grupos maiores, o que pode influenciar o preço da diária, então vamos manter essa coluna e excluir os outliers.")
 
+    st.write("---")
     # beds
     st.markdown("<h4 style='text-align: center;'>Número de Camas</h4>", unsafe_allow_html=True)
     st.image("imagens/beds_1.png")
     st.image("imagens/beds_2.png")
+    st.write("A distribuição mostra que a maioria das listagens tem 1 cama, seguida por aquelas com 2 camas. O número de camas é diretamente relacionado à capacidade de acomodação de uma propriedade e é uma informação crucial para hóspedes que viajam em grupos ou famílias. Por exemplo, um casal pode procurar uma listagem com uma cama de casal, enquanto um grupo de amigos pode preferir várias camas individuais. Esta variável é, portanto, importante ao determinar os preços das diárias. Tendo isso em mente, vamos manter essa coluna e excluir os outliers.")
+
+    st.write("---")
+    # guests_included
+    st.markdown("<h4 style='text-align: center;'>Número de Hóspedes</h4>", unsafe_allow_html=True)
+    st.image("imagens/guest_included_1.png")
+    st.image("imagens/guest_included_2.png")
+    st.write("considerando que muitas listagens incluem apenas 1 ou 2 hóspedes, em vez de uma distribuição variada, não faz sentido mante-la em nossa análise então ela será excluida.")
+
+    st.write("---")
+    # minimum_nights
+    st.markdown("<h4 style='text-align: center;'>Noites Mínimas</h4>", unsafe_allow_html=True)
+    st.image("imagens/minimum_nights_1.png")
+    st.image("imagens/minimum_nights_2.png")
+    st.write("O número mínimo de noites é uma política estabelecida pelo anfitrião e pode variar dependendo de várias razões, incluindo a localização da propriedade, a época do ano ou as preferências pessoais do anfitrião. No entanto, com base na distribuição observada, a maior parte dos anfitriões parecem favorecer estadias curtas, tornando a amostra muito homogênea e desnecessário para a nossa análise, por isso ela será excluida.")
+
+    st.write("---")
+    # maximum_nights
+    st.markdown("<h4 style='text-align: center;'>Noites Máximas</h4>", unsafe_allow_html=True)
+    st.image("imagens/maximum_nights_1.png")
+    st.image("imagens/maximum_nights_2.png")
+    st.write("Temos um pico claro em torno do valor máximo, indicando que muitos anfitriões definem um valor padrão muito alto para o número máximo de noites (provavelmente para efetivamente não ter um limite). No entanto, a presença de valores tão altos pode não ser significativa para a nossa modelagem, por isso vamos excluir essa coluna também.")
+
+    st.write("---")
+    # number_of_reviews
+    st.markdown("<h4 style='text-align: center;'>Numero de Reviws</h4>", unsafe_allow_html=True)
+    st.image("imagens/number_of_reviews_1.png")
+    st.image("imagens/number_of_reviews_2.png")
+    st.write("O número de avaliações pode ser um indicador da popularidade ou confiabilidade de uma listagem. Listagens com muitas avaliações podem ser vistas como mais confiáveis ou populares entre os hóspedes. No entanto, como o tempo de existência do imóvel no airbnb favorece os mais antigos, vamos excluir essa coluna.")
+
+    st.write("---")
+    # amenities
+    st.markdown("<h4 style='text-align: center;'>Numero de Comodidades</h4>", unsafe_allow_html=True)
+    st.image("imagens/n_amenities_1.png")
+    st.image("imagens/n_amenities_2.png")
+    st.write("A mediana do número de comodidades (amenities) é aproximadamente 18, indicando que muitas listagens oferecem em torno de 18 comodidades. Um número maior de comodidades pode ser um indicativo de uma listagem mais luxuosa ou bem equipada, o que pode afetar o preço da diária, sendo assim, vamos manter essa coluna e excluir os outliers.")
+
+    st.write("---")
+    # property_type
+    st.markdown("<h4 style='text-align: center;'>Tipo de Propriedade</h4>", unsafe_allow_html=True)
+    st.image("imagens/propety_type_1.png")
+    st.write("Os tipos de propriedade mais comuns no conjunto de dados são 'Apartment' e 'House', que representam a grande maioria das listagens. Como a variedade de tipos de propriedades no Airbnb é vasta, os tipos de propriedade que têm uma contagem muito baixa serão agrupadas na categoria 'Other' para simplificação.")
+
+    st.write("---")
+    # room_type
+    st.markdown("<h4 style='text-align: center;'>Tipo de Quarto</h4>", unsafe_allow_html=True)
+    st.image("imagens/room_type_1.png")
+    st.write("O tipo de quarto mais comum no conjunto de dados é 'Entire home/apt', indicando que muitos anfitriões oferecem a propriedade inteira para os hóspedes. Como o tipo de quarto é uma característica crucial para muitos hóspedes, vamos manter essa coluna.")
+
+    st.write("---")
+    # bed_type
+    st.markdown("<h4 style='text-align: center;'>Tipo de Cama</h4>", unsafe_allow_html=True)
+    st.image("imagens/bed_type_1.png")
+    st.write("O tipo de cama é uma característica que pode influenciar a experiência do hóspede. Uma 'Real Bed' é geralmente preferida por muitos hóspedes por oferecer um maior conforto. No entanto, não temos uma distribuição significativa dos tipos então não faz sentido mantê-la em nossa análise, por isso ela será excluída.")
+
+    st.write("---")
+    # cancellation_policy
+    st.markdown("<h4 style='text-align: center;'>Política de Cancelamento</h4>", unsafe_allow_html=True)
+    st.image("imagens/cancellation_policy_1.png")
+    st.write("A política de cancelamento  determina as condições sob as quais os hóspedes podem cancelar suas reservas sem penalidades. Algumas políticas são mais flexíveis, permitindo cancelamentos até um dia antes da chegada, enquanto outras são mais estritas, exigindo um aviso prévio maior e aplicando penalidades mais severas por cancelamento, mas não há um critério rigoroso para aplica-la a uma propriedade. Então para simplificar o nosso modelo, ela também será excluida!")
+    st.write("")
 
     st.header("📌 Modelando a Inteligência Artificial")
+    st.write("Após a fase de preparação e limpeza dos dados, chegamos ao coração do nosso projeto: a modelagem de machine learning. Esta etapa é essencial, pois é aqui que aplicamos algoritmos para aprender os padrões nos dados e fazer previsões precisas. Decidi experimentar uma variedade de algoritmos de aprendizado de máquina, incluindo a Regressão Linear, o algoritmo Lasso, as Árvores Extras e a Floresta Aleatória. Cada um desses algoritmos tem suas próprias características e pode se destacar de maneiras diferentes dependendo da natureza dos dados.")
+    st.write("Em vez de treinar e avaliar cada modelo separadamente, criamos uma função personalizada que assume a responsabilidade de treinar, testar e avaliar todos os modelos de uma só vez. Isso não apenas otimiza nosso tempo, mas também garante uma abordagem padronizada na avaliação de cada modelo.")
+    codigo4 = """
+    # Função para treinar e avaliar um modelo
+    def treinar_e_avaliar_modelo(modelo, X_treino, y_treino, X_teste, y_teste):
+        modelo.fit(X_treino, y_treino)
+        y_pred = modelo.predict(X_teste)
+        mse = mean_squared_error(y_teste, y_pred)
+        r2 = r2_score(y_teste, y_pred)
+        print(f'Erro Quadrático Médio: {mse}')
+        print(f'Coeficiente de Determinação (R2): {r2}')
+        return mse, r2
+
+    # Modelos
+    modelos = {
+        'Árvores Extras': ExtraTreesRegressor(n_estimators=100, random_state=42),
+        'Floresta Aleatória': RandomForestRegressor(n_estimators=100, random_state=42),
+        'Lasso': Lasso(),
+        'Regressão Linear': LinearRegression()
+    }
+
+    # Treinando e avaliando cada modelo
+    for nome_modelo, instancia_modelo in modelos.items():
+        print(f'\nAvaliando {nome_modelo}:')
+        treinar_e_avaliar_modelo(instancia_modelo, X_treino_completo_csv, y_treino_completo_csv, X_teste_completo_csv, y_teste_completo_csv)
+    """
+    st.code(codigo4, language='python')
+    st.write("Com os resultados em mãos, podemos analisar o desempenho de cada modelo e fazer uma escolha informada sobre qual deles levar adiante para a etapa de produção. Esta será a versão final que estará disponível para os usuários finais, pronta para fazer previsões precisas e informadas sobre os preços das diárias no Airbnb.")
     st.write("")
 
     st.header("📌 Apresentação de Resultados")
+    st.write("Após a modelagem, chegamos à etapa crucial de avaliar e apresentar os resultados. Nesta fase, revisamos o desempenho de cada modelo para entender sua eficácia em prever os preços das diárias no Airbnb. Utilizamos duas métricas chave: o Erro Quadrático Médio (MSE), que nos dá uma medida da diferença entre as previsões e os valores reais, e o Coeficiente de Determinação (R2), que indica a proporção da variância dos preços que é previsível a partir das características.")
+    st.write("Para facilitar a compreensão e comparação dos modelos, optamos por apresentar o R2  em percentual. Isso nos dá uma ideia clara de quão bem cada modelo se ajusta aos dados. Um  R2 de 100% indicaria um ajuste perfeito.")
+    st.image("imagens/resultados.png")
     st.write("")
 
     st.header("📌 Escolhendo o Melhor Modelo e Colocando em Produção")
-    st.write("")
+    st.write("Após a rigorosa avaliação de vários modelos, chegamos à etapa final: selecionar o melhor modelo e prepará-lo para uso em produção. Esta é uma etapa crucial, pois o modelo escolhido será o que estará disponível para os usuários finais, fornecendo previsões em tempo real.")
+    st.write("Com base nos resultados anteriores, o modelo de 'Árvores Extras' destacou-se como o mais promissor, apresentando um excelente equilíbrio entre precisão e eficiência. Decidimos, portanto, adotá-lo como nosso modelo final.")
+    codigo5 = """
+    # definindo dados de treino e teste
+    y = base_airbnb['price']
+    x = base_airbnb.drop('price', axis=1)
+
+    # dividindo a base entre treino e teste
+    x_treino, x_teste, y_treino, y_teste = train_test_split(x, y, test_size=0.2 ,random_state=42)
+
+    # cria o modelo
+    modelo_extratrees = ExtraTreesRegressor(n_estimators=10, random_state=42)
+
+    # treina o modelo
+    modelo_extratrees.fit(x_treino, y_treino)
+
+    # testa o modelo
+    y_pred = modelo_extratrees.predict(x_teste)
+
+    #avalia o modelo
+    mse = mean_squared_error(y_teste, y_pred)
+    r2 = r2_score(y_teste, y_pred)
+    print(f'Erro Quadrático Médio: {mse}')
+    print(f'Coeficiente de Determinação (R2): {r2}')
+
+    #armazena o modelo treinado para produção
+    joblib.dump(modelo_extratrees, "arquivos_pkl/modelo_airbnb_treinado.pkl")
+    """
+    st.code(codigo5, language='python')
+    st.write("Com isso, concluímos a etapa de implementação do modelo em produção. Agora, o modelo está pronto para ser integrado a qualquer aplicação ou plataforma, fornecendo previsões de preços de diárias no Airbnb com base nas características fornecidas.")
+
+    # marcador azul
+    colored_header(
+    label="",
+    description="",
+    color_name="blue-40"
+    )
+
+    # #footer
+    with st.container():
+
+        # cria 3 colunas
+        col1, col2, col3 = st.columns([2,1,2])
+        
+        # coluna do meio
+        col2.write("Developed By: [@Huelerssey](https://huelerssey-portfolio.website)")
