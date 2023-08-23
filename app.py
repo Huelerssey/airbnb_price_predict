@@ -6,8 +6,7 @@ from streamlit_extras.colored_header import colored_header
 import pages.separador.home as PaginaUm
 import pages.separador.previsao as PaginaDois
 import pages.separador.map as PaginaTres
-import pages.separador.dashboard as PaginaQuatro
-import pages.separador.storytelling as paginaCinco
+import pages.separador.storytelling as PaginaQuatro
 
 
 # configurações da pagina
@@ -44,12 +43,15 @@ with st.sidebar:
         #https://icons.getbootstrap.com
         menu_title="Menu Inicial",
         menu_icon="justify",
-        options=["Home", "Previsão", "Mapa", "Dashboard", "Storytelling"],
-        icons=['house', 'clipboard-data', 'geo-alt', "journal-code", "pin-angle" ],
+        options=["Home", "Previsão", "Mapa", "Storytelling"],
+        icons=['house', 'clipboard-data', 'geo-alt', "pin-angle" ],
         default_index=0,
         orientation='vertical',
     )
 
+    st.write("")
+    st.write("")
+    st.write("")
     st.write("")
     st.write("")
     st.write("")
@@ -108,10 +110,6 @@ elif opcao_selecionada == "Previsão":
 elif opcao_selecionada == "Mapa":
     PaginaTres.map()
 
-# retorna a pagina 4
-elif opcao_selecionada == "Dashboard":
-    PaginaQuatro.dashboard()
-
-#retorna a pagina 5
+#retorna a pagina 4
 elif opcao_selecionada == "Storytelling":
-    paginaCinco.storytelling()
+    PaginaQuatro.storytelling()

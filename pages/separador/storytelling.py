@@ -1,7 +1,6 @@
 import streamlit as st
 from streamlit_extras.colored_header import colored_header
 from src.data_utility import carregar_dados_abnb
-import plotly.express as px
 
 
 def storytelling():
@@ -306,7 +305,7 @@ def storytelling():
     st.markdown("<h4 style='text-align: center;'>Coluna de Preço por Pessoa Extra</h4>", unsafe_allow_html=True)
     st.image("imagens/extra_people_1.png")
     st.image("imagens/extra_people_2.png")
-    st.write("A mediana dos custos adicionais por pessoa extra é $0, o que indica que muitos anfitriões não cobram um custo adicional por hóspedes extras. A maioria dos custos para pessoas extras está concentrada entre $0 e $50 e existem alguns outliers acima do limite superior, indicando algumas listagens que cobram significativamente mais por hóspedes extras. Dado o grande número de listagens que não cobram por pessoas extras e a presença de valores mais altos, vamos permanecer com a coluna mas excluindo os outliers.")
+    st.write("A mediana dos custos adicionais por pessoa extra é 0, o que indica que muitos anfitriões não cobram um custo adicional por hóspedes extras. A maioria dos custos para pessoas extras está concentrada entre 0 e $50 e existem alguns outliers acima do limite superior, indicando algumas listagens que cobram significativamente mais por hóspedes extras. Dado o grande número de listagens que não cobram por pessoas extras e a presença de valores mais altos, vamos permanecer com a coluna mas excluindo os outliers.")
 
     st.write("---")
     # host_listings_count
@@ -471,6 +470,8 @@ def storytelling():
     """
     st.code(codigo5, language='python')
     st.write("Com isso, concluímos a etapa de implementação do modelo em produção. Agora, o modelo está pronto para ser integrado a qualquer aplicação ou plataforma, fornecendo previsões de preços de diárias no Airbnb com base nas características fornecidas.")
+
+    st.image("imagens/fim.png")
 
     # marcador azul
     colored_header(

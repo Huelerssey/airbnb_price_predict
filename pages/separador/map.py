@@ -1,5 +1,6 @@
 import streamlit as st
 from src.data_utility import carregar_dados_abnb
+from streamlit_extras.colored_header import colored_header
 
 
 def map():
@@ -7,6 +8,16 @@ def map():
     #carregar dados
     dados = carregar_dados_abnb()
     
+    #titulo
+    st.markdown("<h1 style='text-align: center;'>🗺️ Distribuição de Propriedades no Airbnb RJ 🗺️</h1>", unsafe_allow_html=True)
+
+    # marcador azul
+    colored_header(
+    label="",
+    description="",
+    color_name="light-blue-70"
+    )
+
     # Organização da página
     col1, col2, col3 = st.columns(3)
 
